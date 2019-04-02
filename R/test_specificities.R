@@ -48,7 +48,7 @@
 #'
 #' # Running the function:
 #' testSpecificities(rna.example, prot.example, sample.labels = sample_groups, iter=1000)
-testSpecificities_alpha <- function(rna.exp, prot.exp="none", sample.labels, weight.rna=0.5, weight.protein=0.5, iter=1000){
+testSpecificities <- function(rna.exp, prot.exp="none", sample.labels, weight.rna=0.5, weight.protein=0.5, iter=1000){
   if(sum(names(table(colnames(rna.exp))) %in% sample.labels) != length(sample.labels)){
     stop("RNA columns and sample labels do not match",call.=F)
   }
