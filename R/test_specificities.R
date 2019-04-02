@@ -48,7 +48,7 @@
 #'
 #' # Running the function:
 #' testSpecificities(rna.example, prot.example, sample.labels = sample_groups, iter=1000)
-testSpecificities <- function(rna.exp, prot.exp="none", sample.labels, weight.rna=0.5, weight.protein=0.5, iter=1000){
+testSpecificities_alpha <- function(rna.exp, prot.exp="none", sample.labels, weight.rna=0.5, weight.protein=0.5, iter=1000){
   if(sum(names(table(colnames(rna.exp))) %in% sample.labels) != length(sample.labels)){
     stop("RNA columns and sample labels do not match",call.=F)
   }
@@ -68,11 +68,17 @@ testSpecificities <- function(rna.exp, prot.exp="none", sample.labels, weight.rn
     if(nrow(prot.exp)!=nrow(rna.exp)){
       stop("RNA and protein matrices have a different number of rows",call.=F)
     }
+    if(ncol(prot.exp)!=ncol(rna.exp)){
+      stop("RNA and protein matrices have a different number of columns",call.=F)
+    }
     if(sum(rownames(prot.exp)!= rownames(rna.exp)) > 0){
       stop("Gene names do not match between RNA and protein",call.=F)
     }
     if(sum(names(table(colnames(prot.exp))) %in% sample.labels) != length(sample.labels)){
       stop("Protein columns and sample labels do not match",call.=F)
+    }
+    if(sum(colnames(prot.exp)!= colnames(rna.exp)) > 0){
+      stop("Column names of protein and RNA do not match",call.=F)
     }
     S <- getSpecificities(rna.exp, prot.exp, sample.labels, weight.rna, weight.protein)
     test.res <- matrix(0,nrow = dim(S)[1], ncol=dim(S)[2])
@@ -87,7 +93,7 @@ testSpecificities <- function(rna.exp, prot.exp="none", sample.labels, weight.rn
       test.res <- test.res + comparison
     }
   })
-
+  
   pvals <- as.data.frame((test.res+1)/iter)
   padj <-as.data.frame(apply(pvals, MARGIN=2, FUN=function(p){p.adjust(p, method="BH")}))
   res <- list(specificities=S,p.val=pvals, p.adj=padj)
