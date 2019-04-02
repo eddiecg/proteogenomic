@@ -1,0 +1,15 @@
+Package: proteogenomic
+Title: Inferring cell type-specific signatures from transcriptomic and proteomic data
+Version: 1.0
+Authors@R: person("Eddie", "Cano-Gamez", email = "ecg@sanger.ac.uk", role = c("aut", "cre"))
+Description: proteogenomic can calculate specificity scores and perform statistical testing to identify genes specific to a given cell type or condition. It can do this using either one data set (eg. RNA expression) or two matching data sets (eg. RNA and protein expression data for the same genes)
+Depends: R (>= 3.5.0),
+  doParallel (>= 1.0.11)
+Imports:
+  foreach,
+  iterators,
+  parallel,
+License: 
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1.9000
