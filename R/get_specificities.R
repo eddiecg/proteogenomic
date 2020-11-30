@@ -88,7 +88,8 @@ getSpecificities <- function(rna, protein="none", sample.labels, weight.rna=0.5,
     colnames(protein) <- sample.labels
     protein.specs <- data.frame(t(apply(protein, 1, FUN = function(r){
       s <- r/sqrt(sum(r^2, na.rm=T))
-      return(s)})))
+      return(s)
+    }))
     S <- data.frame(sapply(sample.labels, FUN=function(x){
       weight.rna*rna.specs[,x] + weight.protein*protein.specs[,x]}))
   })
