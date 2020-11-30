@@ -8,5 +8,6 @@ getSpecificities() = Computes specificity scores but does no statistical testing
 testSpecificities() = Computs specificity scores and infers statistical significance via permutations. Also, corrects for multiple hypothesis testing using the Benjamini-Hochberg method
 
 To use these functions, install the proteogenomic package using the following commands:
-  install.packages("devtools") #If not yet installed
-  devtools::install_github("eddiecg/proteogenomic")
+  
+    install.packages("devtools") #If not yet installed
+    devtools::install_github("eddiecg/proteogenomic")
