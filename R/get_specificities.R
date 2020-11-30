@@ -52,7 +52,13 @@ getSpecificities <- function(rna, protein="none", sample.labels, weight.rna=0.5,
     stop("RNA columns and sample labels do not match",call.=F)
   }
   rna <- data.frame(sapply(sample.labels, FUN=function(x){
-    rowMeans(rna[,colnames(rna)==x], na.rm=T)
+    exp = rna[,colnames(rna)==x]
+    if(is.null(dim(exp))){
+      exp = exp
+    } else{
+      exp = rowMeans(exp, na.rm=T)
+    }
+    return(exp)
   }))
   colnames(rna) <- sample.labels
   rna.specs <- data.frame(t(apply(rna, 1, FUN = function(r){
@@ -73,7 +79,12 @@ getSpecificities <- function(rna, protein="none", sample.labels, weight.rna=0.5,
       stop("Protein columns and sample labels do not match",call.=F)
     }
     protein <- data.frame(sapply(sample.labels, FUN=function(x){
-      rowMeans(protein[,colnames(protein)==x], na.rm=T)}))
+      exp = protein[,colnames(protein)==x]
+      if(is.null(dim(exp))){
+         exp = exp
+      } else{
+        exp = rowMeans(exp, na.rm=T)
+      }
     colnames(protein) <- sample.labels
     protein.specs <- data.frame(t(apply(protein, 1, FUN = function(r){
       s <- r/sqrt(sum(r^2, na.rm=T))
